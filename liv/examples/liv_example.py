@@ -9,6 +9,8 @@ from liv import load_liv
 
 model = load_liv()
 model.eval()
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model = model.to(device)
 transform = T.Compose([T.ToTensor()])
 
 task = "open microwave"
@@ -22,10 +24,12 @@ for index in range(start_frame, end_frame):
     imgs.append(img)
     imgs_tensor.append(transform(img))
 imgs_tensor = torch.stack(imgs_tensor)
+device = "cuda" if torch.cuda.is_available() else "cpu"
+imgs_tensor = imgs_tensor.to(device)
 with torch.no_grad():
-    embeddings = model(input=imgs_tensor.cuda(), modality="vision")
+    embeddings = model(input=imgs_tensor, modality="vision")
     goal_embedding_img = embeddings[-1]
-    token = clip.tokenize([task])
+    token = clip.tokenize([task]).to(device)
     goal_embedding_text = model(input=token, modality="text")
     goal_embedding_text = goal_embedding_text[0] 
 
