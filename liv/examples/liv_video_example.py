@@ -69,8 +69,8 @@ model = model.to(device)
 transform = T.Compose([T.ToTensor()])
 
 # Video path
-video_path = "/Users/ludvigeriksonbrangstrup/Qualia/LIV/2 min table clearing.mp4"
-task = "clear the table"  # You can modify this to describe what's happening in your video
+video_path = "/Users/ludvigeriksonbrangstrup/Qualia/LIV/fold_napkins.mp4"
+task = "fold the napkin"  # You can modify this to describe what's happening in your video
 
 print(f"Extracting frames from {video_path}...")
 imgs = extract_frames_from_video(video_path, max_frames=200)
